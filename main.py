@@ -17,13 +17,13 @@ def run_and_print_result(starting, database=None):
 
 if __name__ == '__main__':
     db = Database(agent=agent, map_size=map_name, possible_positions=possible_positions)
-    for i in range(100):
+    for i in range(1):
         print(f'iteration {i}')
-        init_pos = db.get_random_init_pos()
-        # init_pos = (205, 255)
+        # init_pos = db.get_random_init_pos()
+        init_pos = (177, 52)
         # path = run_and_print_result(init_pos)
         path = run_and_print_result(init_pos, db)
         result = Result(init_pos=init_pos, path=path)
         db.add_this_and_other_results(result)
-        db.save_to_file()
+        # db.save_to_file()
 

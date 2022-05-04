@@ -7,14 +7,12 @@ def a_star_search(layout=np.array, start=(), end=(), database=None, conditions=N
     open = []   # open: queue for nodes waiting to be expanded
     closed = [] # closed: nodes expanded
     # Create a start node and an goal node
-    start_node = Node(start, None, end)
-    goal_node = Node(end, None, end)
+    start_node = Node(start, None, end, conditions)
+    goal_node = Node(end, None, end, conditions)
     open.append(start_node)
 
     # Loop until the open list is empty
-    count = 0
-    while len(open) > 0:    # and count < 50:
-        count += 1
+    while len(open) > 0:
         # Sort the open list to get the node with the lowest cost first
         open.sort()
         # Get the node with the lowest cost
@@ -52,7 +50,7 @@ def a_star_search(layout=np.array, start=(), end=(), database=None, conditions=N
 
         # Loop neighbors
         for next in neighbors:
-            neighbor = Node(next, current_node, end)
+            neighbor = Node(next, current_node, end, conditions)
             # Check if neighbor is in open list and if it has a lower f value
             if add_to_open(open, neighbor):
                 # Everything is green, add neighbor to open list
