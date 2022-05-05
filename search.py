@@ -2,13 +2,13 @@ import numpy as np
 from node import Node
 
 
-def a_star_search(layout=np.array, start=(), end=(), database=None, conditions=None):
+def a_star_search(layout=np.array, start=(), end=(), database=None):
     # Create lists for open nodes and closed nodes
     open = []   # open: queue for nodes waiting to be expanded
     closed = [] # closed: nodes expanded
     # Create a start node and an goal node
-    start_node = Node(start, None, end, conditions)
-    goal_node = Node(end, None, end, conditions)
+    start_node = Node(start, None, end)
+    goal_node = Node(end, None, end)
     open.append(start_node)
 
     # Loop until the open list is empty
@@ -50,7 +50,7 @@ def a_star_search(layout=np.array, start=(), end=(), database=None, conditions=N
 
         # Loop neighbors
         for next in neighbors:
-            neighbor = Node(next, current_node, end, conditions)
+            neighbor = Node(next, current_node, end)
             # Check if neighbor is in open list and if it has a lower f value
             if add_to_open(open, neighbor):
                 # Everything is green, add neighbor to open list

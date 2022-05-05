@@ -4,7 +4,7 @@ from base import action_dict, move
 # This class represents a node
 class Node:
     # Initialize the class
-    def __init__(self, position: (), parent: (), end: (), conditions):
+    def __init__(self, position: (), parent: (), end: ()):
         self.position = position
         self.parent = parent
         dist = lambda n1, n2: abs(n1[0] - n2[0]) + abs(n1[1] - n2[1])
@@ -14,9 +14,7 @@ class Node:
             self.g = parent.g + 1
         self.h = dist(self.position, end)
         self.f = self.g + self.h
-        self.memory = 0  # for sma* search
         # Generate heuristics (Manhattan distance)
-        self.conditions = conditions
 
     # Compare nodes
     def __eq__(self, other):
@@ -35,7 +33,7 @@ class Node:
         neighbors = []
         map_size = len(layout)
         for action in action_dict:
-            if self.conditions is None and action == 'nil':
+            if action == 'nil':
                 continue
             (new_y, new_x) = move(self.position, action)
             # if out map/ not moving/ not valid move -> not appending
