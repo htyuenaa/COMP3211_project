@@ -2,7 +2,7 @@ import numpy as np
 from node import Node
 
 
-def a_star_search(layout=np.array, start=(), end=(), database=None, conditions=None):
+def a_star_search(layout=np.array, start=(), end=(), database=None):
     # Create lists for open nodes and closed nodes
     open = []   # open: queue for nodes waiting to be expanded
     closed = [] # closed: nodes expanded
@@ -12,9 +12,7 @@ def a_star_search(layout=np.array, start=(), end=(), database=None, conditions=N
     open.append(start_node)
 
     # Loop until the open list is empty
-    count = 0
-    while len(open) > 0:    # and count < 50:
-        count += 1
+    while len(open) > 0:
         # Sort the open list to get the node with the lowest cost first
         open.sort()
         # Get the node with the lowest cost

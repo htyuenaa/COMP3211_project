@@ -14,7 +14,6 @@ class Node:
             self.g = parent.g + 1
         self.h = dist(self.position, end)
         self.f = self.g + self.h
-        self.memory = 0  # for sma* search
         # Generate heuristics (Manhattan distance)
 
     # Compare nodes
@@ -34,9 +33,11 @@ class Node:
         neighbors = []
         map_size = len(layout)
         for action in action_dict:
+            if action == 'nil':
+                continue
             (new_y, new_x) = move(self.position, action)
             # if out map/ not moving/ not valid move -> not appending
-            if 0 <= new_y < map_size and 0 <= new_x < map_size and action != 'nil':
+            if 0 <= new_y < map_size and 0 <= new_x < map_size:
                 if layout[new_y][new_x] == 0:
                     neighbors.append((new_y, new_x))
         return neighbors

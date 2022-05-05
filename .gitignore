@@ -32,3 +32,5 @@ test*
 /*.lp
 
 map_vis.py
+
+record.txt
