@@ -21,7 +21,7 @@ def get_agent():
     agent = input('agent: ')
     if agent not in ['p1', 'p2']:
         print('agent not found')
-        exit()
+        return get_agent()
     return agent
 
 

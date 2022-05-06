@@ -4,12 +4,18 @@ from node import Node
 
 def a_star_search(layout=np.array, start=(), end=(), database=None):
     # Create lists for open nodes and closed nodes
-    open = []   # open: queue for nodes waiting to be expanded
-    closed = [] # closed: nodes expanded
+    open = []  # open: queue for nodes waiting to be expanded
+    closed = []  # closed: nodes expanded
     # Create a start node and an goal node
     start_node = Node(start, None, end)
     goal_node = Node(end, None, end)
     open.append(start_node)
+
+    # # sort the results in database according to dist from start
+    # if database:
+    #     dist = lambda a, b: abs(b[1]-a[1]) + abs(b[0]-a[0])
+    #     dist_to_start = lambda x: dist(x.init_pos, start)
+    #     database.sort_results(key=dist_to_start)
 
     # Loop until the open list is empty
     while len(open) > 0:
@@ -25,17 +31,18 @@ def a_star_search(layout=np.array, start=(), end=(), database=None):
         # print(f'closed {closed[-100:]}\n')
 
         # check if we passed in the database
-        if database:    # check if current node is travelled before
+        if database:  # check if current node is travelled before
             current_pos = current_node.position
             if database.__contains__(current_pos):
-                if database.get_result(current_pos).get_cost() == current_node.h:
+                result = database.get_result(current_pos)
+                if result.get_cost() == current_node.h:
                     # we can use the previous searching result
                     path = []
                     while current_node != start_node:
                         path.append(current_node.position)
                         current_node = current_node.parent
                     # Return reversed path
-                    return path[::-1] + database.get_result(init_pos=current_pos).path
+                    return path[::-1] + result.path
 
         # Check if we have reached the goal, return the path
         if current_node.is_goal(goal_node):
@@ -49,8 +56,8 @@ def a_star_search(layout=np.array, start=(), end=(), database=None):
         neighbors = current_node.get_neighbors(layout)
 
         # Loop neighbors
-        for next in neighbors:
-            neighbor = Node(next, current_node, end)
+        for next_node in neighbors:
+            neighbor = Node(next_node, current_node, end)
             # Check if neighbor is in open list and if it has a lower f value
             if add_to_open(open, neighbor):
                 # Everything is green, add neighbor to open list
@@ -72,4 +79,3 @@ def add_to_open(open, neighbor):
         open.remove(node[0])
         return True
     return False
-
