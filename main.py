@@ -29,6 +29,7 @@ def run_and_print_result(starting, agent, database=None, lock=None):
         lock.release()
     return path
 
+
 def performance_test(agent):
     db = Database(agent=agent, map_size=map_name, possible_positions=possible_positions)
     init_pos = (6, 122)
@@ -39,6 +40,7 @@ def performance_test(agent):
     result = Result(init_pos=init_pos, path=path)
     db.add_this_and_other_results(result)
     # db.save_to_file()
+
 
 def run_random_search(agent, db, lock=None, num_of_searches=100, thread_number=0):
     for i in range(num_of_searches):
@@ -51,7 +53,7 @@ def run_random_search(agent, db, lock=None, num_of_searches=100, thread_number=0
         path = run_and_print_result(init_pos, agent, db, lock)
         result = Result(init_pos=init_pos, path=path)
 
-        if lock is not None:    # prevent other processes to save it at the same time
+        if lock is not None:  # prevent other processes to save it at the same time
             lock.acquire()
         db.add_this_and_other_results(result)
         db.save_to_file()
@@ -64,4 +66,3 @@ if __name__ == '__main__':
     agent = get_agent()
     performance_test(agent)
     # run_random_search(agent)
-

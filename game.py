@@ -1,7 +1,7 @@
 import numpy as np
 
 from base import move
-
+from controller import Controller
 
 MAX_NUM_STEP_DICT = {
     'test': 200,
@@ -26,6 +26,9 @@ class Env():
         self.__goals = goals
         self.__layout = layout
         self.__reach_goal = np.zeros(len(goals))
+
+    def get_layout(self):
+        return self.__layout
 
     def get_goals(self):
         return self.__goals
@@ -95,6 +98,13 @@ class Game():
         self.init_state = starts
         self.agents = agents
         self.env = env
+        self.controller = Controller(env.get_layout(), starts, env.get_goals())
+        self.controller.find_solution()
+        solution = self.controller.get_solution()
+        print(solution)
+        for agent in self.agents:
+            agent.path = solution[agent.name]
+            agent.reset_time()
 
     def run(self):
         state = self.init_state

@@ -1,5 +1,6 @@
 from database import Database, pickle, Result
 
+
 class Dataset(Database):
     def __init__(self, agent, map_size, possible_positions=None):
         super().__init__(agent, map_size, possible_positions)
@@ -44,6 +45,7 @@ class Dataset(Database):
 
 if __name__ == '__main__':
     from utils import possible_positions
-    ds1 = Dataset(agent='p2', map_size='large', possible_positions=possible_positions)
-    ds1.save_to_file()
+    ds1 = Dataset(agent='p1', map_size='large', possible_positions=possible_positions)
+    ds2 = Dataset(agent='p2', map_size='large', possible_positions=possible_positions)
+    # ds1.save_to_file()
 
