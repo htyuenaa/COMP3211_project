@@ -4,9 +4,9 @@ class Result:
         self.path = path
 
     def get_other_results(self):
-        results = []
+        results = set()
         for i in range(len(self.path)-1):
-            results.append(Result(self.path[i], self.path[i:]))
+            results.add(Result(self.path[i], self.path[i:]))
         return results
 
     def __repr__(self):
@@ -24,3 +24,6 @@ class Result:
 
     def print(self):
         print(f'init_pos: {self.init_pos}, path: {self.path}')
+
+    def __hash__(self):
+        return hash(self.init_pos)

@@ -3,19 +3,13 @@ from node import Node
 
 
 def a_star_search(layout=np.array, start=(), end=(), database=None):
-    # Create lists for open nodes and closed nodes
-    open = []  # open: queue for nodes waiting to be expanded
-    closed = []  # closed: nodes expanded
     # Create a start node and an goal node
     start_node = Node(start, None, end)
     goal_node = Node(end, None, end)
+    # Create sets for open nodes and closed nodes
+    open = []  # open: queue for nodes waiting to be expanded
+    closed = set()  # closed: set for nodes expanded (we don't care the orders)
     open.append(start_node)
-
-    # # sort the results in database according to dist from start
-    # if database:
-    #     dist = lambda a, b: abs(b[1]-a[1]) + abs(b[0]-a[0])
-    #     dist_to_start = lambda x: dist(x.init_pos, start)
-    #     database.sort_results(key=dist_to_start)
 
     # Loop until the open list is empty
     while len(open) > 0:
@@ -25,7 +19,7 @@ def a_star_search(layout=np.array, start=(), end=(), database=None):
         current_node = open.pop(0)
         # Add the current node to the closed list
         if current_node not in closed:
-            closed.append(current_node)
+            closed.add(current_node)
         # only print 100 nodes to avoid flooding the console
         # print(f'open {open[:100]}')
         # print(f'closed {closed[-100:]}\n')

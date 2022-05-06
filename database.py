@@ -104,9 +104,6 @@ class Database:
         self.add_result(result)
         self.add_all_results(result.get_other_results())
 
-    def dump(self):
-        self.results = []
-
     def add_all_results_from(self, database):
         if self == database:
             self.add_all_results(database.results)

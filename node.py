@@ -28,6 +28,10 @@ class Node:
     def __repr__(self):
         return '({0},{1})'.format(self.position, self.f)
 
+    # define hash
+    def __hash__(self):
+        return hash(self.position)
+
     # all neighbors returned must be valid
     def get_neighbors(self, layout):
         neighbors = []

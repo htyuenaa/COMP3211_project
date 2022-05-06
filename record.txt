@@ -70,3 +70,20 @@ agent: p2, file name: p2_large_db
 Number of results: 5872
 Total number of results: 46868
 Rate of completion: 12.5%
+
+# testing set
+with set
+run with database
+p1
+current time: 2022-05-06 11:17:27.394183
+finding path for initial position: (6, 122)...
+finding path for p1 initial position: (6, 122) done!
+time taken: 0:02:21.230282
+
+without set
+run with database
+p1
+current time: 2022-05-06 11:31:16.193335
+finding path for initial position: (6, 122)...
+finding path for p1 initial position: (6, 122) done!
+time taken: 0:02:22.400227
