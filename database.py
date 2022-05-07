@@ -76,7 +76,7 @@ class Database:
             print(f'result {init_pos} does not exist in the database!')
             return None
         for result in self.results:
-            if result.initial_positions == init_pos:
+            if result.init_pos == init_pos:
                 return result
 
     def add_all_results(self, new_results):
@@ -89,7 +89,7 @@ class Database:
 
     def get_random_init_pos(self):
         set1 = set(self.possible_positions)
-        set2 = set([r.initial_positions for r in self.results])
+        set2 = set([r.init_pos for r in self.results])
         set3 = list(set1 - set2)
         if not set3:
             return None
@@ -111,7 +111,7 @@ class Database:
     def plot_travelled_positions(self):
         d = {'p1': 0, 'p2': 1}
         print(f'printing travelled_positions...')
-        plot_map([r.initial_positions for r in self.results], agent=d[self.agent])
+        plot_map([r.init_pos for r in self.results], agent=d[self.agent])
 
     def plot_result(self, init_pos):
         d = {'p1': 0, 'p2': 1}

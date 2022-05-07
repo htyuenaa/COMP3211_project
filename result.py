@@ -16,7 +16,7 @@ class Result:
         return f'{self.init_pos}'
 
     def __eq__(self, other):
-        return self.init_pos == other.initial_positions
+        return self.init_pos == other.init_pos
 
     def __lt__(self, other):
         return self.get_cost() < other.get_cost()

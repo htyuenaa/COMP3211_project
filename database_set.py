@@ -2,6 +2,8 @@ from database import Database, pickle, Result
 
 
 class Dataset(Database):
+    boundary_positions = []
+
     def __init__(self, agent, map_size, possible_positions=None):
         super().__init__(agent, map_size, possible_positions)
         if type(self.results) == list:
@@ -41,6 +43,9 @@ class Dataset(Database):
 
     def __contains__(self, init_pos):
         return Result(init_pos) in self.results
+
+    def get_init_pos(self):
+        pass
 
 
 if __name__ == '__main__':
