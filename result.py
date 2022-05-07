@@ -31,8 +31,9 @@ class Result:
         return hash(self.init_pos)
 
     def padding(self, time):
+        last_position = self.path[-1] if len(self.path)>0 else self.init_pos
         while self.get_cost() < time:
-            self.path.append(self.path[-1])
+            self.path.append(last_position)
 
     # clone this object
     def get_copy(self):

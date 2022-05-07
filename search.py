@@ -26,17 +26,18 @@ def a_star_search(layout=np.array, start=(), end=(), database=None):
 
         # check if we passed in the database
         # check if current node is travelled before
-        current_pos = current_node.position
-        if database.__contains__(current_pos):
-            result = database.get_result(current_pos)
-            if result.get_cost() == current_node.h:
-                # we can use the previous searching result
-                path = []
-                while current_node != start_node:
-                    path.append(current_node.position)
-                    current_node = current_node.parent
-                # Return reversed path
-                return path[::-1] + result.path
+        if database:
+            current_pos = current_node.position
+            if database.__contains__(current_pos):
+                result = database.get_result(current_pos)
+                if result.get_cost() == current_node.h:
+                    # we can use the previous searching result
+                    path = []
+                    while current_node != start_node:
+                        path.append(current_node.position)
+                        current_node = current_node.parent
+                    # Return reversed path
+                    return path[::-1] + result.path
 
         # Check if we have reached the goal, return the path
         if current_node.is_goal(goal_node):
