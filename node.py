@@ -28,15 +28,20 @@ class Node:
     def __repr__(self):
         return '({0},{1})'.format(self.position, self.f)
 
+    # define hash
+    def __hash__(self):
+        return hash(self.position)
+
     # all neighbors returned must be valid
-    def get_neighbors(self, layout):
+    def get_neighbors(self, layout, having_condition=False):
         neighbors = []
         map_size = len(layout)
         for action in action_dict:
-            if action == 'nil':
+            # the search don't have any conditions, skip the nil action
+            if action == 'nil' and not having_condition:
                 continue
             (new_y, new_x) = move(self.position, action)
-            # if out map/ not moving/ not valid move -> not appending
+            # if out map/ not valid move -> not appending
             if 0 <= new_y < map_size and 0 <= new_x < map_size:
                 if layout[new_y][new_x] == 0:
                     neighbors.append((new_y, new_x))
@@ -44,3 +49,15 @@ class Node:
 
     def is_goal(self, goal_node):
         return self == goal_node
+
+    def violate(self, conditions=None):
+        if not conditions:
+            return False
+        for condition in conditions:
+            # print(f'condition: {condition}, node pos, g: {self.position}, {self.g}')
+            # print(f'position are same: {self.position == condition.position}')
+            # print(f'time are same: {self.g == condition.time}')
+            if self.position == condition.position and self.g == condition.time:
+                # print('violation detected')
+                return True
+        return False

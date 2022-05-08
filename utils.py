@@ -10,10 +10,12 @@ layout = parse_map_from_file(map_name)
 map_size = len(layout)
 
 possible_positions = []
+boundary_positions = []
 for y in range(map_size):
     for x in range(map_size):
         if layout[y][x] == 0:
             if not (165 <= y <= 202 and 0 <= x <= 40) and not (y > 250 and 20 < x <= 53):
+                # valid positions
                 possible_positions.append((y, x))
 
 
@@ -21,7 +23,7 @@ def get_agent():
     agent = input('agent: ')
     if agent not in ['p1', 'p2']:
         print('agent not found')
-        exit()
+        return get_agent()
     return agent
 
 

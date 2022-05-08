@@ -1,3 +1,5 @@
+import datetime
+
 from agent import MyAgent
 from game import Env, Game
 from animator import Animation
@@ -133,15 +135,15 @@ if __name__ == '__main__':
         NUM_ROUNDS = {
             'test': 20,
             'empty': 10,
-            'small': 10,
-            'medium': 20,
-            'large': 30,
+            'small': 100,
+            'medium': 500,
+            'large': 1,
         }
         env = Env(args.goals, args.map, map_name)
         agents = []
         for name in args.agents:
             agents.append(MyAgent(name, deepcopy(env)))
-
+        time = datetime.datetime.now()
         num_rounds = NUM_ROUNDS[map_name]
         score_list = []
         i = 0
@@ -173,3 +175,4 @@ if __name__ == '__main__':
         sys.stdout = stdout_fd
         print(score_list)
         print(np.mean(score_list))
+        print(datetime.datetime.now() - time)

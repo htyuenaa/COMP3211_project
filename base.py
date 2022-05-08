@@ -22,20 +22,6 @@ class BaseAgent():
         self.avai_action = []
         self.env = env
 
-    def observe(self, game_state):
-        me, others = game_state[self.name], []
-        for name in game_state:
-            if name == self.name:
-                continue
-            else:
-                a = game_state[name]
-                others.append(a)
-        return tuple([me] + others)
-
-    def get_action(self, game_state):
-        pass
-
-
 ######################################
 # You do not have read the following #
 ######################################
