@@ -32,8 +32,9 @@ class State:
                f"p1: {self.results['p1'].path}\n" \
                f"p2: {self.results['p2'].path}"
 
+    # can soon modify it to do in parallel(for the first part only)
     def run_search(self, layout):
-        # can soon modify it to do in parallel
+        # if both of the sets are empty, which only happens in the initial state, simply do searching without conditions
         if self.conditions['p1'] == set() and self.conditions['p2'] == set():
             for name in State.agents_name:
                 path = a_star_search(layout, self.initial_positions[name], self.goals[name])
@@ -41,9 +42,11 @@ class State:
                 self.cost[name] = self.results[name].get_cost()
         else:
             for name in State.agents_name:
+                # the branch's condition is same as its parent, just copy its result
                 if self.conditions[name] == self.parent.conditions[name]:
                     self.results[name] = copy.deepcopy(self.parent.results[name])
                     self.cost[name] = self.results[name].get_cost()
+                # the branch's condition is different as its parent, redo the searching with conditions
                 else:
                     path = a_star_search_with_conditions(layout, self.initial_positions[name], self.goals[name], conditions=self.conditions[name])
                     self.results[name] = Result(self.initial_positions[name], path)

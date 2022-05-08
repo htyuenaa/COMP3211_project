@@ -46,7 +46,7 @@ if __name__ == '__main__':
         print(dataset2)
         lock2.release()
 
-    a = ['p2', 'p1', 'p2', 'p1', 'p2', 'p1', 'p2', 'p1', 'p2']
+    a = ['p2', 'p1', 'p2', 'p1']
     for agent in a:
         create_process(lock, agent)
     load_and_print_databases()
