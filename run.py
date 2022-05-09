@@ -129,21 +129,21 @@ if __name__ == '__main__':
             starts = get_starts(args.agents)
 
     else:
-        stdout_fd = sys.stdout
-        sys.stdout = open("eval.log", "w")
+        # stdout_fd = sys.stdout
+        # sys.stdout = open("eval.log", "w")
 
         NUM_ROUNDS = {
             'test': 20,
             'empty': 10,
-            'small': 100,
+            'small': 200,
             'medium': 500,
-            'large': 1,
+            'large': 30,
         }
         env = Env(args.goals, args.map, map_name)
         agents = []
         for name in args.agents:
             agents.append(MyAgent(name, deepcopy(env)))
-        time = datetime.datetime.now()
+
         num_rounds = NUM_ROUNDS[map_name]
         score_list = []
         i = 0
@@ -167,12 +167,13 @@ if __name__ == '__main__':
             starts = dict()
             for k in range(len(agents)):
                 starts[agents[k].name] = tuple(initials[k])
+            time = datetime.datetime.now()  # self added
             game = Game(starts, agents, env)
             history, score = game.run()
             score_list.append(score)
             i += 1
+            print(datetime.datetime.now() - time)       # testing
 
-        sys.stdout = stdout_fd
+        # sys.stdout = stdout_fd
         print(score_list)
         print(np.mean(score_list))
-        print(datetime.datetime.now() - time)

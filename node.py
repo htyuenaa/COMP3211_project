@@ -4,9 +4,11 @@ from base import action_dict, move
 # This class represents a node
 class Node:
     # Initialize the class
-    def __init__(self, position: (), parent: (), end: ()):
+    def __init__(self, position: (), parent: (), end: (), layout=None):
         self.position = position
         self.parent = parent
+
+        # Generate heuristics (Manhattan distance)
         dist = lambda n1, n2: abs(n1[0] - n2[0]) + abs(n1[1] - n2[1])
         if parent is None:  # root node
             self.g = 0
@@ -14,7 +16,11 @@ class Node:
             self.g = parent.g + 1
         self.h = dist(self.position, end)
         self.f = self.g + self.h
-        # Generate heuristics (Manhattan distance)
+
+        # for sma* usage
+        self.suc_count = -1
+        self.successors = None
+        self.mem = None
 
     # Compare nodes
     def __eq__(self, other):
@@ -61,3 +67,13 @@ class Node:
                 # print('violation detected')
                 return True
         return False
+
+    def generate_successors(self, layout, end):
+        positions = self.get_neighbors(layout)
+        self.successors = [Node(position, self, end) for position in positions]
+
+    def get_next_successor(self):
+        self.suc_count += 1
+        if self.suc_count >= len(self.successors):
+            return None
+        return self.successors[self.suc_count]

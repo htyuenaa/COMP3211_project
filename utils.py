@@ -14,7 +14,7 @@ boundary_positions = []
 for y in range(map_size):
     for x in range(map_size):
         if layout[y][x] == 0:
-            if not (165 <= y <= 202 and 0 <= x <= 40) and not (y > 250 and 20 < x <= 53):
+            if not (y > 110 and x < 75):
                 # valid positions
                 possible_positions.append((y, x))
 
