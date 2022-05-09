@@ -76,5 +76,6 @@ if __name__ == '__main__':
     # print(results)
     # print(results['p1'].path)
     # print(results['p2'].path)
-    from node import Node
-    current_node = Node()
+    # from node import Node
+    # current_node = Node()
+    pass

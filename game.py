@@ -98,7 +98,7 @@ class Game():
         self.init_state = starts
         self.agents = agents
         self.env = env
-        self.controller = Controller(env.get_layout(), starts, env.get_goals())
+        self.controller = Controller(env.get_layout(), starts, env.get_goals(), env.env_name)
         self.controller.find_solution()
         solution = self.controller.get_solution()
         print(solution)

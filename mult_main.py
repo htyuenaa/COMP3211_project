@@ -17,11 +17,11 @@ if __name__ == '__main__':
 
     def terminate_all():
         for p, agent in processes:
-            if p.is_alive():
+            while p.is_alive():
                 p.terminate()
         remove_all_finished()
 
-    def create_process(lock=lock, agent=None, iterations=50):
+    def create_process(lock=lock, agent=None, iterations=100):
         lock.acquire()
         if agent is None:
             agent = get_agent()
@@ -46,7 +46,7 @@ if __name__ == '__main__':
         print(dataset2)
         lock2.release()
 
-    a = ['p2', 'p1', 'p2', 'p1']
+    a = ['p2', 'p1', 'p2', 'p1', 'p2', 'p1']
     for agent in a:
         create_process(lock, agent)
     load_and_print_databases()

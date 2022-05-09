@@ -3,6 +3,8 @@ from node import Node
 
 
 def a_star_search(layout=np.array, start=(), end=(), database=None):
+    if start == end:
+        return [start]
     # Create a start node and an goal node
     start_node = Node(start, None, end)
     goal_node = Node(end, None, end)
@@ -155,3 +157,63 @@ def add_to_open_with_conditions(open, neighbor, conditions):
         open.remove(node[0])
         return True
     return False
+
+def sma_star_search(layout=np.array, start=(), end=(), max_depth=300):
+    if start == end:
+        return [start]
+    # Create a start node and an goal node
+    start_node = Node(start, None, end)
+    goal_node = Node(end, None, end)
+    # Create sets for open nodes and closed nodes
+    queue = [start_node]  # open: queue for nodes waiting to be expanded
+
+    # Loop until the open list is empty
+    while len(queue) > 0:
+        # Sort the open list to get the node with the lowest cost first
+        queue.sort()
+        current_node = queue[0]
+        # print(f'open {open[:100]}')
+        # print(f'closed {closed[-100:]}\n')
+
+        # Check if we have reached the goal, return the path
+        if current_node.is_goal(goal_node):
+            path = []
+            while current_node != start_node:
+                path.append(current_node.position)
+                current_node = current_node.parent
+            # Return reversed path
+            return path[::-1]
+
+        # Get successors (neighbors)
+        if current_node.successors is None:
+            current_node.generate_successors(layout, end)
+
+        # get the next successor s, s = next-successor(node)
+        s = current_node.get_next_successor()
+        if s is None:   # No more successor
+            # then update f-cost of node to the biggest cost remember
+            pass
+
+        if not s.is_goal() and s.g == max_depth:
+            s.f = np.infty
+        else:
+            s.f = max(current_node.f, s.f)
+
+        # if all children nodes already in the queue, remove the node
+        if set(current_node.successors) & set(queue) == set(current_node.successors):
+            queue.remove(current_node)
+        # memory is full
+        if len(queue) == max_depth:
+            # bad node: highest f with lowest g
+            queue.sort(key=lambda x: x.g)
+            queue.sort(key=lambda x: x.f, reverse=True)
+            bad_node = queue[0]
+            """
+            for parent in badnode.parents:
+            parent.successors.remove(badNode)
+            if needed then queue.insert(parent)
+            """
+        # queue.append(s)
+    # Return None, no path is found
+    return None
+

@@ -22,6 +22,8 @@ class Dataset(Database):
         self.results.update(new_results_set)
 
     def get_result(self, init_pos: ()):
+        if Result(init_pos=init_pos) not in self.results:
+            return None
         iterator = iter(self.results)
         result = None
         while result is None:
